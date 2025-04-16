@@ -89,8 +89,16 @@ app.use(ErrorMiddleWare);
 // Start server
 const startServer = async () => {
   await testDatabaseConnection(); // Test database connection
-
-
+  
+  // Don't sync models with database initially since we're using migrations
+  // If you need to sync model changes later, uncomment this
+  /* 
+  if (process.env.NODE_ENV === 'development') {
+    await db.sequelize.sync({ alter: true }); // In development, alter tables
+    console.log('Database synchronized');
+  }
+  */
+  
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });
